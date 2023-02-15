@@ -23,7 +23,6 @@ class AddressBook(UserList,BotInterface):
             if account['phones']:
                 new_value = []
                 for phone in account['phones']:
-                    print(phone)
                     if phone:
                         new_value.append(phone)
                 phone = ', '.join(new_value)
@@ -93,9 +92,8 @@ class AddressBook(UserList,BotInterface):
         if not file_name:
             file_name = input("File name: ")
         cwd_file:Path  = Path.cwd().joinpath(file_name + '.bin')
-
         if cwd_file.exists():
-            with open(file_name + '.bin', 'rb') as file:
+            with open(cwd_file, 'rb') as file:
                 self.data = pickle.load(file)
             self.log("Addressbook has been loaded!")
         else:
