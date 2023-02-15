@@ -1,3 +1,15 @@
+"""Функціональність боту розширяєьться дуже просто
+   Створюємо модуль з классом боту який імплементує інтересфейс BotInterface
+   
+   from SomeBoot import *
+   ....
+   BOTS = {
+    'AddressBook': AddressBook,
+    'SomeBot':SomeBot
+    'Exit': None
+    }
+
+"""
 from Bot import Bot
 from AddressBook import *
 
