@@ -1,6 +1,6 @@
 """Функціональність боту розширяєьться дуже просто
    Створюємо модуль з классом боту який імплементує інтересфейс BotInterface
-   
+
    from SomeBoot import *
    ....
    BOTS = {
@@ -21,6 +21,8 @@ if __name__ == "__main__":
     while True:
         print('-'*57 + '\nHello. I am your assistant. What do i have to work with?:\n' + '-'*57)
         for bot in BOTS:
+            if bot == 'Exit':
+                print('.....')
             print(bot)
         answer = input('> ')
         if answer.lower() == 'exit':
