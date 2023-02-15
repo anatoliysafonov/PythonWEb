@@ -34,6 +34,6 @@ class BotInterface(ABC):
         pass
 
     @abstractmethod
-    def hello():
+    def suggetion():
         pass
 

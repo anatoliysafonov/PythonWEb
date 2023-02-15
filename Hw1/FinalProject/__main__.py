@@ -37,12 +37,13 @@ if __name__ == "__main__":
 
         commands = ['Add', 'Search', 'Edit', 'Load', 'Remove', 'Save', 'Congratulate', 'View', 'Exit']
         while True:
-            action = input(current.bot.hello()).strip().lower()
+            print(current.bot.suggetion())
+            action = input('> ').strip().lower()
             if action == 'help':
                 format_str = str('{:%s%d}' % ('^',20))
                 for command in commands:
                     print(format_str.format(command))
-                action = input().strip().lower()
+                action = input('> ').strip().lower()
                 current.handle(action)
             else:
                 current.handle(action)

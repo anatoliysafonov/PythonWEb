@@ -209,5 +209,5 @@ class AddressBook(UserList,BotInterface):
                 result.append(f"{key}: {' '.join(value)}")
         return '_' * 50 + '\n' + '\n'.join(result) + '\n' + '_' * 50
 
-    def hello(self):
+    def suggetion(self):
         return 'Type help for list of commands or enter your command\n'
