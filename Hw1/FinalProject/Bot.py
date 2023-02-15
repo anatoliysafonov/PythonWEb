@@ -1,4 +1,4 @@
-from type_bot_class import BotInterface
+from bots_interface import BotInterface
 
 class Bot:
     def __init__(self, bot:BotInterface):

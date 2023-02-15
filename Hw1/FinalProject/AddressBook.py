@@ -2,9 +2,9 @@ from datetime import datetime as dt, timedelta
 from collections import UserList
 import pickle
 from info import *
-import os
+from pathlib import Path
 
-from type_bot_class import BotInterface
+from bots_interface import BotInterface
 
 
 
@@ -92,8 +92,9 @@ class AddressBook(UserList,BotInterface):
     def load(self,file_name:str= None):
         if not file_name:
             file_name = input("File name: ")
-        emptyness = os.stat(file_name + '.bin')
-        if emptyness.st_size != 0:
+        cwd_file:Path  = Path.cwd().joinpath(file_name + '.bin')
+
+        if cwd_file.exists():
             with open(file_name + '.bin', 'rb') as file:
                 self.data = pickle.load(file)
             self.log("Addressbook has been loaded!")
