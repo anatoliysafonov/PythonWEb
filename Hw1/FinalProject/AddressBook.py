@@ -30,6 +30,7 @@ class AddressBook(UserList,BotInterface):
                 phone = ''
             result.append(
                 "_" * 50 + "\n" + f"Name: {account['name']} \nPhones: {phone} \nBirthday: {birth} \nEmail: {account['email']} \nStatus: {account['status']} \nNote: {account['note']}\n" + "_" * 50 + '\n')
+        result = result or ['AddressBook is empty!']
         return '\n'.join(result)
 
     def __next__(self):

@@ -1,0 +1,10 @@
+[08:51:41] Adressbook has been created!
+[08:52:38] Addressbook has been saved!
+[08:52:38] Contact Anna has been added.
+[08:52:55] Addressbook has been loaded!
+[08:55:02] Addressbook has been loaded!
+[08:55:21] Contact Anna has been removed!
+[08:55:21] Addressbook has been saved!
+[08:55:52] Addressbook has been loaded!
+[08:56:04] Addressbook has been loaded!
+[08:57:07] Addressbook has been loaded!
