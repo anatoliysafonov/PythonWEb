@@ -1,8 +1,0 @@
-[08:22:16] Adressbook has been created!
-[08:23:31] Adressbook has been created!
-[08:24:09] Addressbook has been saved!
-[08:24:09] Contact Anna has been added.
-[08:24:31] Addressbook has been loaded!
-[08:25:19] Addressbook has been saved!
-[08:25:19] Contact Tolik has been added.
-[08:37:07] Addressbook has been loaded!
