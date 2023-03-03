@@ -9,6 +9,6 @@ setup(
     author_email='webba1065@gmail.com',
     license='MIT',
     packages=find_namespace_packages(),
-    install_requires=['prompt-toolkit'],
+    install_requires=['prompt-toolkit','loguru'],
     entry_points={'console_scripts': ['sortis = main:main']}
 )

@@ -1,10 +1,11 @@
 import concurrent.futures
 from multiprocessing import cpu_count, RLock
-
+from datetime import datetime
 from pathlib import Path
 import argparse
 
 from prompt_toolkit.shortcuts import yes_no_dialog
+from loguru import logger
 
 
 LIST_OF_FOLDERS = {'pictures':     ['JPEG', 'PNG', 'JPG', 'SVG'],
@@ -12,11 +13,13 @@ LIST_OF_FOLDERS = {'pictures':     ['JPEG', 'PNG', 'JPG', 'SVG'],
                    'documents':    ['DOC', 'DOCX', 'TXT', 'PDF', 'XLSX', 'PPTX'],
                    'audio':        ['MP3', 'OGG', 'WAV', 'AMR'],
                    'archives':     ['ZIP', 'GZ', 'TAR'],
+                   'LOGS':          ['LOG'],
                    'others':       []
                    }
 
 source_folder = destination_folder = None
 locker = RLock()
+logger_ = logger
 
 #взнаємо назву папки по розширенню файла який переноситься
 def get_subfolder(filename:Path):
@@ -30,6 +33,7 @@ def get_subfolder(filename:Path):
 def do_sort(source:str):
     global destination_folder
     global locker
+    global logger_
     source:Path = Path(source)
     for item in source.iterdir():
        if item.is_file():
@@ -41,6 +45,8 @@ def do_sort(source:str):
             dest_path = dest_path / item.name
             with locker:
                 item.rename(dest_path)
+                logger_.info(f'{source.absolute()} -> {dest_path.absolute()}')
+            
     #якщо ми запустити скрипт з самої папки яку треба розслртувати, то скрипт буде намагатись видалили саму папку в яку ми кладемо файли ,тому ігноруємо помилку
     with locker:
         try:
@@ -55,6 +61,7 @@ def main():
     #Визначаємо глобальні змінні для використання в процессах
     global source_folder
     global destination_folder
+    logs = []
 
     #визначаємо вихідну папку та вхідну
     parser = argparse.ArgumentParser()
@@ -77,13 +84,21 @@ def main():
     if not answer:
         quit()
     
+    #logs записуємо тільки у файл 
+    logger_.remove(0)
+    logger_.add(f'{destination_folder}/sortis.log', format='{message}')
+    logger_.info (f'\n-- {datetime.now()} --')
+
     #визначаємо всі вкладені папки в папці яку треба розсортувати 
     list_inner_folders = [folder for folder in Path(source_folder).rglob('*') if folder.is_dir()]
     list_inner_folders.append(source_folder)
 
     #запускаємо для кожної папки окремий процесс в pool
+    results = None
     with concurrent.futures.ThreadPoolExecutor(cpu_count()) as executor:
         results = filter(None,list(executor.map(do_sort, list_inner_folders)))
+
+    logger_.info('\n'.join(list(results)))
     
 if __name__ == '__main__':
     main()
