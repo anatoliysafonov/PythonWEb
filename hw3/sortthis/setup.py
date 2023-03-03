@@ -8,5 +8,7 @@ setup(
     author='webba1065',
     author_email='webba1065@gmail.com',
     license='MIT',
-    entry_points={'console_scripts': ['sorthis = main:main']}
+    packages=find_namespace_packages(),
+    install_requires=['prompt-toolkit'],
+    entry_points={'console_scripts': ['sortis = main:main']}
 )

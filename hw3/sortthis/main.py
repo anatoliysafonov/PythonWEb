@@ -1,7 +1,11 @@
 import concurrent.futures
 from multiprocessing import cpu_count, RLock
+
 from pathlib import Path
 import argparse
+
+from prompt_toolkit.shortcuts import yes_no_dialog
+
 
 LIST_OF_FOLDERS = {'pictures':     ['JPEG', 'PNG', 'JPG', 'SVG'],
                    'video':        ['AVI', 'MP4', 'MOV', 'MKV'],
@@ -64,6 +68,15 @@ def main():
     source_folder = args.source or current_folder
     destination_folder = args.destination or current_folder
 
+    answer = True
+    if source_folder ==  current_folder or source_folder =='.':
+        answer = yes_no_dialog(
+            title='WARNING',
+            text='Do You really want to sort CURRENT folder?'
+        ).run()
+    if not answer:
+        quit()
+    
     #визначаємо всі вкладені папки в папці яку треба розсортувати 
     list_inner_folders = [folder for folder in Path(source_folder).rglob('*') if folder.is_dir()]
     list_inner_folders.append(source_folder)
