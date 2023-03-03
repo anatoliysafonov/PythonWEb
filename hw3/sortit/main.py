@@ -34,7 +34,6 @@ def do_sort(source:str):
     global destination_folder
     global locker
     global logger_
-    result = ''
     source = Path(source)
     for item in source.iterdir():
        if item.is_file():
@@ -56,7 +55,6 @@ def do_sort(source:str):
             source.rmdir()
         except Exception:
             pass
-    return result +'\n'
     
 
 
