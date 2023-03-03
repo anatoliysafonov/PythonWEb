@@ -10,5 +10,5 @@ setup(
     license='MIT',
     packages=find_namespace_packages(),
     install_requires=['prompt-toolkit','loguru'],
-    entry_points={'console_scripts': ['sortis = main:main']}
+    entry_points={'console_scripts': ['sortit = main:main']}
 )

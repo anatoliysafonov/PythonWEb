@@ -34,13 +34,16 @@ def do_sort(source:str):
     global destination_folder
     global locker
     global logger_
-    source:Path = Path(source)
+    result = ''
+    source = Path(source)
     for item in source.iterdir():
        if item.is_file():
             if item.name == ".DS_Store":
                 item.unlink()
                 continue
-            dest_path = Path(destination_folder) / get_subfolder(item)
+            if item.name == 'sortis.log':
+                continue
+            dest_path = destination_folder / get_subfolder(item)
             dest_path.mkdir(parents=True, exist_ok=True)
             dest_path = dest_path / item.name
             with locker:
@@ -53,7 +56,7 @@ def do_sort(source:str):
             source.rmdir()
         except Exception:
             pass
-        
+    return result +'\n'
     
 
 
@@ -84,21 +87,26 @@ def main():
     if not answer:
         quit()
     
+    
     #logs записуємо тільки у файл 
     logger_.remove(0)
-    logger_.add(f'{destination_folder}/sortis.log', format='{message}')
+    logger_.add(f'{destination_folder}/sortit.log', format='{message}')
     logger_.info (f'\n-- {datetime.now()} --')
 
+    source_folder = Path(source_folder)
+    destination_folder = Path(destination_folder)
     #визначаємо всі вкладені папки в папці яку треба розсортувати 
-    list_inner_folders = [folder for folder in Path(source_folder).rglob('*') if folder.is_dir()]
-    list_inner_folders.append(source_folder)
+    list_inner_folders = [folder for folder in source_folder.rglob('*') if folder.is_dir()]
+    list_inner_folders.append(source_folder.name)
 
     #запускаємо для кожної папки окремий процесс в pool
     results = None
     with concurrent.futures.ThreadPoolExecutor(cpu_count()) as executor:
-        results = filter(None,list(executor.map(do_sort, list_inner_folders)))
+        filter(None,list(executor.map(do_sort, list_inner_folders)))
 
-    logger_.info('\n'.join(list(results)))
-    
+    print('DONE!!!')
+    print(f'see {destination_folder.absolute()}/sortit.log file')
+
 if __name__ == '__main__':
     main()
+    
