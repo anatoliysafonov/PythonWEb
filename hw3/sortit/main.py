@@ -100,7 +100,7 @@ def main():
     #запускаємо для кожної папки окремий процесс в pool
     results = None
     with concurrent.futures.ThreadPoolExecutor(cpu_count()) as executor:
-        filter(None,list(executor.map(do_sort, list_inner_folders)))
+        executor.map(do_sort, list_inner_folders)
 
     print('DONE!!!')
     print(f'see {destination_folder.absolute()}/sortit.log file')
